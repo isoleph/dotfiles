@@ -7,3 +7,5 @@ alias pip="pip3"                            # who uses pip2?
 
 # create gitignore files
 function gi() { curl -sL https://www.gitignore.io/api/$@ ;}
+# create shortened url 
+function tiny() { curl -sL https://tinyurl.com/api-create.php\?url\=http://$@/ ;}
