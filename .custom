@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# define a cpp function to run scripts
+function cpp() {
+  string=$1
+  suffix=".cpp"
+  foo=${string}
+  foo=${foo%"$suffix"}
+  eval "g++ -std=c++17 $1 -o "${foo}
+  eval ./${foo}
+  eval rm ${foo}
+}
+
+# cpp function with ROOT flags
+function cpr() {
+  string=$1
+  suffix=".cpp"
+  foo=${string}
+  foo=${foo%"$suffix"}
+  eval "g++ `root-config --cflags --libs` $1 -o "${foo}
+  eval ./${foo}
+  eval rm ${foo}
+}
+
+# define a c function to run scripts
+function c() {
+  string=$1
+  suffix=".c"
+  foo=${string}
+  foo=${foo%"$suffix"}
+  eval "gcc $1 -o "${foo}
+  eval ./${foo}
+  eval rm ${foo}
+}
+
+# rust function for scripts
+function rust() {
+    string=$1
+    suffix='.rs'
+    foo=${string}
+    foo=${foo%"$suffix"}
+    eval "rustc $1 "
+    eval ./${foo}
+    eval rm ${foo}
+}
+
+# java function for scripts
+function java() {
+    string=$1
+    suffix='.java'
+    foo=${string}
+    foo=${foo%"$suffix"}
+    eval "javac $1"
+    eval "java ${foo}"
+    eval rm "${foo}.class"
+}
+
+# time python runs and make a file with data
+function tpy() {
+  echo $(date "+DATE: %Y-%m-%d\nTIME: %H:%M:%S\nFILE: ${1}") >> time.txt
+  { time python3 $1; } 2>> time.txt
+  echo "\n" >> time.txt
+}
+
+# render latex
+function lx() {
+    string=$1
+    suffix=".pdf"
+    foo=${string}
+    foo=${string/.tex/$suffix}
+    eval "pdflatex -quiet $1"
+    rm -f *.log *.aux
+    eval "open "${foo}
+}
+
+# open chrome from terminal
+chrome () {
+    open -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome $1
+  }
