@@ -9,11 +9,9 @@ set shiftwidth=4
 set expandtab
 set autoindent
 
-set number              " numbers in gutter
 set noshowmode
 set showcmd
 set showmatch
-set cursorline
 filetype indent on
 set ttyfast
 
@@ -30,11 +28,25 @@ set laststatus=2
 set showcmd
 set matchpairs+=<:>
 
-nnoremap j gj
-nnoremap k gk
-
 augroup configgroup 
 augroup END
+
+" numbers in the gutter
+:set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+" Close those brackets!
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
 
 " Plugin Settings
 " ----------------------------------------------------------------
@@ -49,10 +61,10 @@ endif
 " Install other plugins with vim-plug ----
 call plug#begin('~/.vim/plugged')
     Plug 'junegunn/vim-plug'        "package manager
-    Plug 'tpope/vim-sensible'       "sensible settings
+    Plug 'tpope/vim-surround'       "surround plugin
     Plug 'flazz/vim-colorschemes'   "colorschemes for vim
+    Plug 'joshdick/onedark.vim'
     Plug 'itchyny/lightline.vim'    "vim mode line
-
     Plug 'scrooloose/nerdtree'      "directory tree
     Plug 'neoclide/coc.nvim', {'branch': 'release'}     "autocomplete
 call plug#end()
@@ -63,7 +75,9 @@ let g:lightline = {
     \ }
 
 "set colorscheme----
-colorscheme ir_black
+colorscheme onedark
+hi Normal ctermbg=none
+highlight NonText ctermbg=none
 
 "NERDTree Settings ----
 "open NERDTree if no file is specified
@@ -87,4 +101,3 @@ inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
   \ coc#refresh()
-
