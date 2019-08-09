@@ -28,12 +28,24 @@ function tpy() {
   echo "\n" >> time.txt
 }
 
-# render latex
+# render latex using pdflatex
 function lx() {
     executable=${1%".tex"}.pdf 
     eval "pdflatex -quiet $1"
-    eval "open "${executable}
-    rm -rf *.log *.aux *.nav *.out *.snm *.toc
+    eval "open "${foo}
+    rm -f *.log *.aux 2> /dev/null    # suppress rm stderr
+    rm -f *.nav *.out 2> /dev/null
+    rm -f *.snm *.toc 2> /dev/null
+}
+
+# render latex using luatex (feynman diagrams)
+function lua() {
+    executable=${1%".tex"}.pdf 
+    eval "lualatex $1 > /dev/null"   # suppress lua stdout
+    eval "open "${foo}
+    rm -f *.log *.aux 2> /dev/null   # suppress rm stderr
+    rm -f *.nav *.out 2> /dev/null
+    rm -f *.snm *.toc 2> /dev/null
 }
 
 # open chrome from terminal
