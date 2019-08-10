@@ -32,7 +32,7 @@ function tpy() {
 function lx() {
     executable=${1%".tex"}.pdf 
     eval "pdflatex -quiet $1"
-    eval "open "${foo}
+    eval "open "${executable}
     rm -f *.log *.aux 2> /dev/null    # suppress rm stderr
     rm -f *.nav *.out 2> /dev/null
     rm -f *.snm *.toc 2> /dev/null
@@ -41,8 +41,8 @@ function lx() {
 # render latex using luatex (feynman diagrams)
 function lua() {
     executable=${1%".tex"}.pdf 
-    eval "lualatex $1 > /dev/null"   # suppress lua stdout
-    eval "open "${foo}
+    eval "lualatex $1 > /dev/null 2>&1"   # suppress lua stdout
+    eval "open "${executable}
     rm -f *.log *.aux 2> /dev/null   # suppress rm stderr
     rm -f *.nav *.out 2> /dev/null
     rm -f *.snm *.toc 2> /dev/null
