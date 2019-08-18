@@ -1,14 +1,14 @@
-set encoding=utf-8 
 set shell=zsh
+set encoding=utf-8 
 syntax enable
 
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
-set autoindent
+
 filetype indent on
+set autoindent
 
 set noshowmode
 set showcmd
@@ -18,13 +18,14 @@ set ttyfast
 set wildmenu
 set lazyredraw
 set showmatch
+
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+
 set autowrite
 set laststatus=2
-
 set showcmd
 set matchpairs+=<:>
 
