@@ -29,7 +29,7 @@ set laststatus=2
 set showcmd
 set matchpairs+=<:>
 
-" numbers in the gutter
+" numbers in the gutter settings
 set number relativenumber
 augroup numbertoggle
     autocmd!
@@ -38,7 +38,7 @@ augroup numbertoggle
 augroup END
 
 " set a spell checker
-autocmd FileType latex,tex,md,markdown,text setlocal spell
+autocmd FileType latex,tex,md,markdown,text setlocal spell 
 
 " Close those brackets!
 inoremap " ""<left>
@@ -74,6 +74,19 @@ call plug#begin('~/.vim/plugged')
     Plug 'itchyny/lightline.vim'    "vim mode line
     Plug 'scrooloose/nerdtree'      "directory tree
     Plug 'neoclide/coc.nvim', {'branch': 'release'}     "autocomplete
+    Plug 'SirVer/ultisnips'
+        let g:UltiSnipsExpandTrigger = '<TAB>'
+        let g:UltiSnipsJumpForwardTrigger = '<TAB>'
+        let g:UltiSnipsJumpBackwardTrigger = '<s-TAB>'
+        let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+    Plug 'honza/vim-snippets'
+    Plug 'lervag/vimtex'
+        let g:tex_flavor='latexmk'
+        let g:vimtex_latexmk_enabled = 1
+        let g:vimtex_latexmk_options = "-pvc -pdflua -silent""
+        let g:vimtex_quickfix_mode=0
+        set conceallevel=1
+        let g:tex_conceal='abdmg'
 call plug#end()
 
 " Set lightline color----
@@ -108,3 +121,39 @@ inoremap <silent><expr> <TAB>
     \ pumvisible() ? "\<C-n>" :
     \ <SID>check_back_space() ? "\<TAB>" :
     \ coc#refresh()
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" COC Snippets
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" Cleanup log files for vimtex when done
+augroup MyVimtex
+  autocmd!
+  autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
+augroup END
+

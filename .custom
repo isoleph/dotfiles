@@ -28,12 +28,12 @@ function tpy() {
   echo "\n" >> time.txt
 }
 
-# render latex using pdflatex
+# override latexmk
 function lx() {
     executable=${1%".tex"}.pdf 
-    eval "pdflatex -quiet $1"
-    eval "open "${executable}
+    eval "latexmk -pvc -pdflua -silent "$1
     rm -f *.log *.aux 2> /dev/null    # suppress rm stderr
+    rm -f *.fdb_latexmk *.fls 2> /dev/null 
     rm -f *.nav *.out 2> /dev/null
     rm -f *.snm *.toc 2> /dev/null
 }

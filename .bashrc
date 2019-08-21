@@ -4,6 +4,7 @@
 alias cpwd="pwd | tr -d '\n' | pbcopy"      # copy current ./ to clipboard
 alias :q="exit"                             # vim exit alias ;)
 alias pip="pip3"                            # who uses pip2?
+alias venv="virtualenv venv/"
 alias dirs="dirs -v"                        # show last dirs
 alias fc="fc -e vim"                        # fc edit last command
 
