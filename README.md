@@ -1,6 +1,5 @@
 # Angel's Dotfiles
 
-Here are several of my config files that I use in my macOS development environment. For details in what I'm working with, here's my [neofetch](https://github.com/dylanaraps/neofetch).
 ```bash
                     'c.          angel@air.local
                  ,xNMM.          ---------------
@@ -20,3 +19,5 @@ Here are several of my config files that I use in my macOS development environme
      ;KMMMMMMMWXXWMMMMMMMk.      GPU: Intel UHD Graphics 617
        .cooc,.    .,coo:.        Memory: 5908MiB / 8192MiB
 ```
+
+Here are several of my config files that I use in my macOS development environment. For details in what I'm working with, you can see my [neofetch](https://github.com/dylanaraps/neofetch) above.
