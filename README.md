@@ -1,7 +1,7 @@
 # Angel's Dotfiles
 
 Here are several of my config files that I use on macOS development environment.
-
+```bash
                     'c.          angel@air.local
                  ,xNMM.          ---------------
                .OMMMMo           OS: macOS Mojave 10.14.6 18G87 x86_64
@@ -19,3 +19,4 @@ Here are several of my config files that I use on macOS development environment.
     kMMMMMMMMMMMMMMMMMMMMMMd     CPU: Intel i5-8210Y (4) @ 1.60GHz
      ;KMMMMMMMWXXWMMMMMMMk.      GPU: Intel UHD Graphics 617
        .cooc,.    .,coo:.        Memory: 5908MiB / 8192MiB
+```
