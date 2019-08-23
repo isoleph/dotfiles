@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# C++ easy command
 function cpp() {
     executable=${1%".cpp"}
     eval "g++ -std=c++17 $1 -o "${executable}
@@ -7,6 +8,7 @@ function cpp() {
     eval rm ${executable}
 }
 
+# C++ with ROOT framework
 function cpr() {
     executable=${1%".cpp"}
     eval "g++ `root-config --cflags --libs` $1 -o "${executable}
@@ -14,6 +16,7 @@ function cpr() {
     eval rm ${executable}
 }
 
+# Rust easy command
 function rust() {
     executable=${1%".rs"}
     eval "rustc $1"
@@ -28,7 +31,7 @@ function tpy() {
   echo "\n" >> time.txt
 }
 
-# override latexmk
+# Run active latex section
 function lx() {
     executable=${1%".tex"}.pdf 
     eval "latexmk -pvc -pdflua -silent "$1

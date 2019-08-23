@@ -29,7 +29,7 @@ set laststatus=2
 set showcmd
 set matchpairs+=<:>
 
-" numbers in the gutter settings
+" numbers in the gutter; toggle depending on mode
 set number relativenumber
 augroup numbertoggle
     autocmd!
@@ -49,7 +49,7 @@ inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
-" unset last search pattern by pressing enter
+" unhighlight last search by pressing enter in normal mode
 nnoremap <CR> :noh<CR><CR>
 
 " Plugin Settings
@@ -66,22 +66,22 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'junegunn/vim-plug'        "package manager
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf.vim'         " fuzzy finder
     Plug 'tpope/vim-surround'       "surround plugin
-    Plug 'tpope/vim-repeat'         "support . for above
+    Plug 'tpope/vim-repeat'         "support . repeat for above
     Plug 'flazz/vim-colorschemes'   "colorschemes for vim
-    Plug 'joshdick/onedark.vim'
-    Plug 'itchyny/lightline.vim'    "vim mode line
-    Plug 'scrooloose/nerdtree'      "directory tree
+    Plug 'joshdick/onedark.vim'     "greatest theme ever
+    Plug 'itchyny/lightline.vim'    "pretty vim mode line
+    Plug 'scrooloose/nerdtree'      "directory tree plugin
     Plug 'neoclide/coc.nvim', {'branch': 'release'}     "autocomplete
-    Plug 'SirVer/ultisnips'
+    Plug 'SirVer/ultisnips'         "snippets repository for vim-snippets
         let g:UltiSnipsExpandTrigger = '<TAB>'
         let g:UltiSnipsJumpForwardTrigger = '<TAB>'
         let g:UltiSnipsJumpBackwardTrigger = '<s-TAB>'
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-    Plug 'honza/vim-snippets'
-    Plug 'lervag/vimtex'
-        let g:tex_flavor='latexmk'
+    Plug 'honza/vim-snippets'       "snuppets
+    Plug 'lervag/vimtex'            "render LaTeX from vim screen
+        let g:tex_flavor='latexmk'  "use latexmk and continuous update
         let g:vimtex_latexmk_enabled = 1
         let g:vimtex_latexmk_options = "-pvc -pdflua -silent""
         let g:vimtex_quickfix_mode=0
@@ -104,14 +104,14 @@ highlight NonText ctermbg=none
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" open NERDTree if directory is input
+"open NERDTree if directory is vim argument
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 "NERDTree Remap
 nmap <C-n> :NERDTreeToggle<CR>
 
-" Completion for COC
+"Completion for COC
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
@@ -137,7 +137,7 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" COC Snippets
+" COC Snippets on TAB
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
