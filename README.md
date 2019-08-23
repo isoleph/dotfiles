@@ -1,6 +1,6 @@
 # Angel's Dotfiles
 
-Here are several of my config files that I use on macOS development environment.
+Here are several of my config files that I use in my macOS development environment. For details in what I'm working with, here's my [neofetch](https://github.com/dylanaraps/neofetch).
 ```bash
                     'c.          angel@air.local
                  ,xNMM.          ---------------
