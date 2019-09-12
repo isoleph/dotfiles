@@ -1,13 +1,25 @@
-Coc Extensions I recommend installing using `:CocInstall` in vim
+# Coc Extensions I recommend 
 
-coc-ccls            # for C++
-coc-dictionary      # for common English words
+Remember that these are installed using `:CocInstall` in vim. Check this [repo](https://github.com/neoclide/coc.nvim) out for more info.
+
+coc-ccls
+
+coc-dictionary
+
 coc-emoji
+
 coc-html
+
 coc-java
+
 coc-json
-coc-pairs           # auto-complete; edit vimrc to prevent conflicts
+
+coc-pairs    
+
 coc-python
-coc-snippets        # vs-code like completion
-coc-texlab          # for LaTeX
-coc-ultisnips       # more vs-code like completion
+
+coc-snippets
+
+coc-texlab 
+
+coc-ultisnips
