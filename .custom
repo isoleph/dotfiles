@@ -39,7 +39,7 @@ function tpy() {
   echo >> time.txt
 }
 
-# Run active latex section
+# Run active latex session
 function lx() {
     executable=${1%".tex"}.pdf 
     eval "latexmk -pvc -pdflua -silent "$1

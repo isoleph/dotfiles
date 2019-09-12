@@ -1,7 +1,7 @@
-Coc Extensions I recommend installing
+Coc Extensions I recommend installing using `:CocInstall` in vim
 
 coc-ccls            # for C++
-coc-dictionary      # for common Englush words
+coc-dictionary      # for common English words
 coc-emoji
 coc-html
 coc-java
