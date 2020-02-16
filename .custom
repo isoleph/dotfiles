@@ -5,7 +5,7 @@ function cpp() {
     executable=${1%".cpp"}
     eval "g++ -std=c++17 $1 -o "${executable}
     eval ./${executable}
-    eval rm ${executable}
+    eval rm -rf ${executable}
 }
 
 # C++ with ROOT framework
@@ -13,7 +13,7 @@ function cpr() {
     executable=${1%".cpp"}
     eval "g++ `root-config --cflags --libs` $1 -o "${executable}
     eval ./${executable}
-    eval rm ${executable}
+    eval rm -rf ${executable}
 }
 
 # Rust easy command
@@ -21,15 +21,15 @@ function rust() {
     executable=${1%".rs"}
     eval "rustc $1"
     eval ./${executable}
-    eval rm ${executable}
+    eval rm -rf ${executable}
 }
 
 function haskell() {
     executable=${1%".hs"}
     eval "ghc -o ${executable} $1"
     eval ./${executable}
-    eval rm ${executable} ${executable}".hi"
-    eval rm ${executable}".o"
+    eval rm -rf ${executable} ${executable}".hi"
+    eval rm -rf ${executable}".o"
 }
 
 # time python runs and make a file with data
@@ -37,26 +37,6 @@ function tpy() {
   echo $(date "+DATE: %Y-%m-%d\nTIME: %H:%M:%S\nFILE: ${1}") >> time.txt
   { time python3 $1; } 2>> time.txt
   echo >> time.txt
-}
-
-# Run active latex session
-function lx() {
-    executable=${1%".tex"}.pdf 
-    eval "latexmk -pvc -pdflua -silent "$1
-    rm -f *.log *.aux 2> /dev/null    # suppress rm stderr
-    rm -f *.fdb_latexmk *.fls 2> /dev/null 
-    rm -f *.nav *.out 2> /dev/null
-    rm -f *.snm *.toc 2> /dev/null
-}
-
-# render latex using luatex (feynman diagrams)
-function lua() {
-    executable=${1%".tex"}.pdf 
-    eval "lualatex $1 > /dev/null 2>&1"   # suppress lua stdout
-    eval "open "${executable}
-    rm -f *.log *.aux 2> /dev/null   # suppress rm stderr
-    rm -f *.nav *.out 2> /dev/null
-    rm -f *.snm *.toc 2> /dev/null
 }
 
 # open chrome from terminal

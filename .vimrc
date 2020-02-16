@@ -1,14 +1,18 @@
 set shell=zsh
-set encoding=utf-8 
+set encoding=utf8
+set nocompatible
+set guifont=FiraCode\ Nerd\ Font:h18
 syntax enable
 
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set conceallevel=3
 
 filetype indent on
 set autoindent
+set backspace=indent,eol,start
 
 set noshowmode
 set showcmd
@@ -36,16 +40,7 @@ augroup numbertoggle
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-
-" set a spell checker
-autocmd FileType latex,tex,md,markdown,text setlocal spell 
-
-" Close those brackets!
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
+""" Close those brackets!
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
@@ -73,29 +68,40 @@ call plug#begin('~/.vim/plugged')
     Plug 'joshdick/onedark.vim'     "greatest theme ever
     Plug 'itchyny/lightline.vim'    "pretty vim mode line
     Plug 'scrooloose/nerdtree'      "directory tree plugin
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}     "autocomplete
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}         "autocomplete
     Plug 'SirVer/ultisnips'         "snippets repository for vim-snippets
         let g:UltiSnipsExpandTrigger = '<TAB>'
         let g:UltiSnipsJumpForwardTrigger = '<TAB>'
         let g:UltiSnipsJumpBackwardTrigger = '<s-TAB>'
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-    Plug 'honza/vim-snippets'       "snuppets
+    Plug 'honza/vim-snippets'       "snippets
     Plug 'lervag/vimtex'            "render LaTeX from vim screen
         let g:tex_flavor='latexmk'  "use latexmk and continuous update
         let g:vimtex_latexmk_enabled = 1
         let g:vimtex_latexmk_options = "-pvc -pdflua -silent""
         let g:vimtex_quickfix_mode=0
+        let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+        let g:vimtex_view_general_options = '-r @line @pdf @tex'
+        let g:vimtex_fold_enabled = 0 "So large files can open more easily
         set conceallevel=1
         let g:tex_conceal='abdmg'
+    Plug 'ryanoasis/vim-devicons'
+        let g:WebDevIconsOS = 'Darwin'
+        let g:webdevicons_conceal_nerdtree_brackets = 1
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 
+    Plug 'junegunn/goyo.vim'
+    Plug 'tpope/vim-markdown'
+        let g:markdown_fenced_languages = ['python', 'bash=sh', 'cpp', 'c', 'java', 'haskell', 'javascript', 'html', 'css', 'rust', 'go']
+        let java_ignore_javadoc=1
+    Plug 'JamshedVesuna/vim-markdown-preview'
+        let vim_markdown_preview_github=1
 call plug#end()
 
-" Set lightline color----
-let g:lightline = {
-    \ 'colorscheme': 'wombat',
-\ }
+"set devicon colors
+let g:NERDTreeLimitedSyntax = 1
 
 "set colorscheme----
-colorscheme onedark
+colorscheme onedark 
 hi Normal ctermbg=none
 highlight NonText ctermbg=none
 
@@ -110,6 +116,29 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 "NERDTree Remap
 nmap <C-n> :NERDTreeToggle<CR>
+
+"NERDTree Highlighting"
+let g:NERDTreeSyntaxDisableDefaultExtensions = 1
+let g:NERDTreeDisableExactMatchHighlight = 1
+let g:NERDTreeDisablePatternMatchHighlight = 1
+let g:NERDTreeSyntaxEnabledExtensions = ['c', 'h', "c++", 'java', 'hs', 'js', 'css', 'html', 'py', 'sh', 'go', 'rs', 'md'] 
+
+" Set lightline color----
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component_function': {
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
+      \ }
+      \ }
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ' '
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ' '
+endfunction
 
 "Completion for COC
 function! s:check_back_space() abort
@@ -149,11 +178,10 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" set spellchecker
 let g:coc_snippet_next = '<tab>'
 
-" Cleanup log files for vimtex when done
-augroup MyVimtex
-  autocmd!
-  autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
-augroup END
-
+" set a spell checker
+autocmd FileType latex,tex,md,markdown,text,txt setlocal spell
+autocmd BufNewFile,BufRead *.md set ft=markdown spell
+syntax spell toplevel
